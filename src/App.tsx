@@ -17,6 +17,7 @@ type MatchFilters = {
 };
 
 const LS_KEY = "skillport_mvp_state_v1";
+const tabs: Tab[] = ["Р’РёС‚СЂРёРЅР°", "РџРѕРґРѕР±СЂР°С‚СЊ", "Р—Р°СЏРІРєРё", "РџРѕСЂС‚С„РѕР»РёРѕ", "Рћ РїСЂРѕРµРєС‚Рµ"];
 
 type Persisted = {
   requests: SessionRequest[];
@@ -145,27 +146,32 @@ export function App() {
   }, [persisted.requests]);
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/75 backdrop-blur">
-        <div className="flex w-full items-center justify-between gap-3 px-4 py-3">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 text-sm font-bold text-white shadow-sm">
+    <div className="relative flex min-h-screen flex-col overflow-hidden">
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[420px] bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.9),transparent_34%),radial-gradient(circle_at_78%_12%,rgba(20,184,166,0.22),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.32),transparent)]" />
+      <div className="pointer-events-none absolute -right-28 top-[24rem] -z-10 h-80 w-80 rounded-full bg-[rgba(14,165,233,0.12)] blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 bottom-20 -z-10 h-72 w-72 rounded-full bg-[rgba(245,158,11,0.12)] blur-3xl" />
+      <header className="sticky top-0 z-20 border-b border-white/40 bg-[rgba(252,250,245,0.74)] backdrop-blur-xl">
+        <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-4 md:px-6">
+          <div className="flex items-center gap-4">
+            <div className="flex h-12 w-12 items-center justify-center rounded-[22px] bg-[linear-gradient(135deg,#115e59,#06b6d4)] text-sm font-bold text-white shadow-[0_18px_40px_-22px_rgba(13,148,136,0.9)]">
               SP
             </div>
             <div className="leading-tight">
-              <div className="text-sm font-semibold">SkillPort</div>
-              <div className="text-xs text-slate-500">Peer-to-peer для школьников 7–11 классов</div>
+              <div className="display-font text-base font-bold text-slate-900">SkillPort</div>
+              <div className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500">Peer-to-peer education</div>
             </div>
           </div>
 
-          <div className="hidden items-center gap-2 md:flex">
-            {(["Витрина", "Подобрать", "Заявки", "Портфолио", "О проекте"] as Tab[]).map((t) => (
+          <div className="hidden items-center gap-2 rounded-full border border-white/55 bg-white/60 p-1 shadow-[0_18px_40px_-28px_rgba(15,23,42,0.35)] md:flex">
+            {tabs.map((t) => (
               <button
                 key={t}
                 onClick={() => setTab(t)}
                 className={
-                  "rounded-xl px-3 py-2 text-sm transition " +
-                  (tab === t ? "bg-indigo-600 text-white" : "text-slate-700 hover:bg-slate-100")
+                  "rounded-full px-4 py-2 text-sm font-medium transition " +
+                  (tab === t
+                    ? "bg-slate-900 text-white shadow-[0_12px_24px_-18px_rgba(15,23,42,0.9)]"
+                    : "text-slate-600 hover:bg-white hover:text-slate-900")
                 }
               >
                 {t}
@@ -175,71 +181,108 @@ export function App() {
 
         </div>
 
-        <div className="w-full px-4 pb-3 md:hidden">
+        <div className="mx-auto w-full max-w-7xl px-4 pb-4 md:hidden md:px-6">
           <Select value={tab} onChange={(e) => setTab(e.target.value as Tab)}>
-            <option>Витрина</option>
-            <option>Подобрать</option>
-            <option>Заявки</option>
-            <option>Портфолио</option>
-            <option>О проекте</option>
+            {tabs.map((item) => (
+              <option key={item}>{item}</option>
+            ))}
           </Select>
         </div>
       </header>
 
-      <main className="w-full flex-1 px-4 py-6">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 md:px-6 md:py-10">
         {tab === "Витрина" && (
-          <div className="grid gap-4">
-            <Card className="p-5">
-              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div className="space-y-2">
-                  <h1 className="text-2xl font-semibold tracking-tight">Взаимопомощь вместо дорогих репетиторов</h1>
-                  <p className="text-sm text-slate-600">
+          <div className="grid gap-5">
+            <Card className="relative overflow-hidden border-white/50 bg-[linear-gradient(135deg,rgba(255,255,255,0.9),rgba(255,247,237,0.72)_45%,rgba(204,251,241,0.62))] p-6 md:p-8">
+              <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-[rgba(20,184,166,0.16)] blur-3xl" />
+              <div className="absolute bottom-0 right-12 h-36 w-36 rounded-full bg-[rgba(245,158,11,0.12)] blur-3xl" />
+              <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(280px,0.7fr)] lg:items-end">
+                <div className="space-y-4">
+                  <Badge tone="indigo" className="w-fit border-transparent bg-white/75 text-teal-800">
+                    MVP community platform
+                  </Badge>
+                  <h1 className="max-w-3xl text-4xl font-bold leading-tight text-slate-950 md:text-5xl">
+                    Взаимопомощь вместо дорогих репетиторов
+                  </h1>
+                  <p className="max-w-2xl text-base leading-7 text-slate-600">
                     SkillPort - платформа коротких сессий 20-30 минут: старшеклассники помогают младшим в рамках
                     школьного сообщества. Без прямой оплаты за урок.
                   </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge tone="emerald" className="border-transparent bg-white/70 text-emerald-800">
+                      20-30 минут
+                    </Badge>
+                    <Badge tone="amber" className="border-transparent bg-white/70 text-amber-900">
+                      Рейтинги и модерация
+                    </Badge>
+                    <Badge tone="slate" className="border-transparent bg-white/70 text-slate-700">
+                      School-safe flow
+                    </Badge>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <Button onClick={() => setTab("Подобрать")}>Подобрать наставника</Button>
-                  <Button variant="secondary" onClick={() => setTab("Заявки")}>
-                    Открыть заявки
-                  </Button>
+
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  <div className="rounded-[24px] border border-white/70 bg-white/78 p-4 shadow-[0_20px_50px_-34px_rgba(15,23,42,0.35)]">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">Сейчас в MVP</div>
+                    <div className="mt-3 grid grid-cols-3 gap-3">
+                      <div>
+                        <div className="display-font text-3xl font-bold text-slate-950">{stats.mentors}</div>
+                        <div className="text-xs text-slate-500">Наставников</div>
+                      </div>
+                      <div>
+                        <div className="display-font text-3xl font-bold text-slate-950">{stats.verifiedMentors}</div>
+                        <div className="text-xs text-slate-500">Проверены</div>
+                      </div>
+                      <div>
+                        <div className="display-font text-3xl font-bold text-slate-950">{stats.total}</div>
+                        <div className="text-xs text-slate-500">Заявок</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 lg:justify-end">
+                    <Button onClick={() => setTab("Подобрать")}>Подобрать наставника</Button>
+                    <Button variant="secondary" onClick={() => setTab("Заявки")}>
+                      Открыть заявки
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Card>
 
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-6">
-              <Card className="p-4">
+            <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
+              <Card className="border-white/55 bg-white/60 p-4">
                 <div className="text-xs text-slate-500">Наставники</div>
-                <div className="text-2xl font-semibold">{stats.mentors}</div>
+                <div className="display-font mt-2 text-3xl font-bold text-slate-950">{stats.mentors}</div>
               </Card>
-              <Card className="p-4">
+              <Card className="border-white/55 bg-white/60 p-4">
                 <div className="text-xs text-slate-500">Проверенные</div>
-                <div className="text-2xl font-semibold">{stats.verifiedMentors}</div>
+                <div className="display-font mt-2 text-3xl font-bold text-slate-950">{stats.verifiedMentors}</div>
               </Card>
-              <Card className="p-4">
+              <Card className="border-white/55 bg-white/60 p-4">
                 <div className="text-xs text-slate-500">Заявки</div>
-                <div className="text-2xl font-semibold">{stats.total}</div>
+                <div className="display-font mt-2 text-3xl font-bold text-slate-950">{stats.total}</div>
               </Card>
-              <Card className="p-4">
+              <Card className="border-white/55 bg-white/60 p-4">
                 <div className="text-xs text-slate-500">Открыто</div>
-                <div className="text-2xl font-semibold">{stats.open}</div>
+                <div className="display-font mt-2 text-3xl font-bold text-slate-950">{stats.open}</div>
               </Card>
-              <Card className="p-4">
+              <Card className="border-white/55 bg-white/60 p-4">
                 <div className="text-xs text-slate-500">Подтверждено</div>
-                <div className="text-2xl font-semibold">{stats.confirmed}</div>
+                <div className="display-font mt-2 text-3xl font-bold text-slate-950">{stats.confirmed}</div>
               </Card>
-              <Card className="p-4">
+              <Card className="border-white/55 bg-white/60 p-4">
                 <div className="text-xs text-slate-500">Завершено</div>
-                <div className="text-2xl font-semibold">{stats.done}</div>
+                <div className="display-font mt-2 text-3xl font-bold text-slate-950">{stats.done}</div>
               </Card>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-              <Card>
+              <Card className="border-white/50 bg-white/72">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-sm font-semibold">Как это работает</div>
-                    <div className="mt-1 text-sm text-slate-600 whitespace-pre-line">
+                    <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Как это работает</div>
+                    <div className="mt-3 whitespace-pre-line text-sm leading-7 text-slate-600">
                       {`1) Выбираешь класс и предмет
                     2) Платформа предлагает подходящих наставников
                     3) Создаёшь заявку
@@ -248,24 +291,24 @@ export function App() {
                   </div>
                 </div>
                 <Divider className="my-4" />
-                <ul className="space-y-2 text-sm text-slate-700">
-                  <li className="flex gap-2">
-                    <span className="mt-0.5 h-2 w-2 rounded-full bg-indigo-600" />
+                <ul className="space-y-3 text-sm text-slate-700">
+                  <li className="flex gap-3">
+                    <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-teal-600 shadow-[0_0_0_6px_rgba(20,184,166,0.12)]" />
                     Короткие сессии 20-30 минут — удобно «закрывать пробелы».
                   </li>
-                  <li className="flex gap-2">
-                    <span className="mt-0.5 h-2 w-2 rounded-full bg-indigo-600" />
+                  <li className="flex gap-3">
+                    <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-teal-600 shadow-[0_0_0_6px_rgba(20,184,166,0.12)]" />
                     Рейтинги и отзывы - контроль качества.
                   </li>
-                  <li className="flex gap-2">
-                    <span className="mt-0.5 h-2 w-2 rounded-full bg-indigo-600" />
+                  <li className="flex gap-3">
+                    <span className="mt-1.5 h-2.5 w-2.5 rounded-full bg-teal-600 shadow-[0_0_0_6px_rgba(20,184,166,0.12)]" />
                     Баллы - портфолио наставника (вклад в сообщество).
                   </li>
                 </ul>
               </Card>
 
-              <Card>
-                <div className="text-sm font-semibold">Популярные предметы</div>
+              <Card className="border-white/50 bg-white/72">
+                <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Популярные предметы</div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   {subjects.map((s) => (
                     <button
@@ -274,10 +317,10 @@ export function App() {
                         setFilters((f) => ({ ...f, subjectId: s.id }));
                         setTab("Подобрать");
                       }}
-                      className="rounded-2xl border border-slate-200 bg-white px-3 py-3 text-left hover:bg-slate-50"
+                      className="rounded-[24px] border border-white/75 bg-white/75 px-4 py-4 text-left shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)] transition hover:-translate-y-1 hover:bg-white"
                     >
-                      <div className="text-xs text-slate-500">{s.emoji}</div>
-                      <div className="text-sm font-medium">{s.name}</div>
+                      <div className="text-xl">{s.emoji}</div>
+                      <div className="mt-2 text-sm font-semibold text-slate-900">{s.name}</div>
                     </button>
                   ))}
                 </div>
@@ -293,12 +336,12 @@ export function App() {
         )}
 
         {tab === "Подобрать" && (
-          <div className="grid gap-4 md:grid-cols-[380px_1fr]">
-            <Card className="p-5">
-              <div className="text-sm font-semibold">Параметры подбора</div>
+          <div className="grid gap-4 md:grid-cols-[minmax(320px,380px)_1fr] md:items-start">
+            <Card className="p-5 md:sticky md:top-24">
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Параметры подбора</div>
               <div className="mt-4 grid gap-3">
                 <div>
-                  <div className="mb-1 text-xs font-medium text-slate-600">Кого ищем</div>
+                  <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Кого ищем</div>
                   <Select value={filters.roleNeeded} onChange={(e) => setFilters((f) => ({ ...f, roleNeeded: e.target.value as any }))}>
                     <option value="mentor">Наставника (9-11 класс)</option>
                     <option value="student">Ученика (7-9 класс)</option>
@@ -306,7 +349,7 @@ export function App() {
                 </div>
 
                 <div>
-                  <div className="mb-1 text-xs font-medium text-slate-600">Мой класс</div>
+                  <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Мой класс</div>
                   <Select
                     value={filters.seekerGrade}
                     onChange={(e) => setFilters((f) => ({ ...f, seekerGrade: Number(e.target.value) }))}
@@ -332,7 +375,7 @@ export function App() {
                 </div>
 
                 <div>
-                  <div className="mb-1 text-xs font-medium text-slate-600">Предмет</div>
+                  <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Предмет</div>
                   <Select value={filters.subjectId} onChange={(e) => setFilters((f) => ({ ...f, subjectId: e.target.value }))}>
                     {subjects.map((s) => (
                       <option key={s.id} value={s.id}>
@@ -344,14 +387,14 @@ export function App() {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <div className="mb-1 text-xs font-medium text-slate-600">Формат</div>
+                    <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Формат</div>
                     <Select value={filters.format} onChange={(e) => setFilters((f) => ({ ...f, format: e.target.value as any }))}>
                       <option value="Видео">Видео</option>
                       <option value="Чат">Чат</option>
                     </Select>
                   </div>
                   <div>
-                    <div className="mb-1 text-xs font-medium text-slate-600">Длительность</div>
+                    <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Длительность</div>
                     <Select
                       value={filters.durationMin}
                       onChange={(e) => setFilters((f) => ({ ...f, durationMin: Number(e.target.value) as 20 | 30 }))}
@@ -363,15 +406,24 @@ export function App() {
                 </div>
 
                 <div>
-                  <div className="mb-1 text-xs font-medium text-slate-600">Удобное время</div>
+                  <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Удобное время</div>
                   <div className="grid grid-cols-1 gap-2">
                     {timeslots.map((t) => {
                       const checked = filters.timeIds.includes(t.id);
                       return (
-                        <label key={t.id} className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm">
+                        <label
+                          key={t.id}
+                          className={
+                            "flex items-center justify-between rounded-2xl border px-4 py-3 text-sm transition " +
+                            (checked
+                              ? "border-teal-300 bg-teal-50/85 shadow-[0_18px_40px_-32px_rgba(13,148,136,0.45)]"
+                              : "border-white/75 bg-white/75 hover:bg-white")
+                          }
+                        >
                           <span className="text-slate-700">{t.label}</span>
                           <input
                             type="checkbox"
+                            className="h-4 w-4 rounded border-slate-300 accent-teal-700"
                             checked={checked}
                             onChange={(e) => {
                               setFilters((f) => ({
@@ -386,20 +438,28 @@ export function App() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between rounded-xl border border-slate-200 bg-white px-3 py-2">
+                <div
+                  className={
+                    "flex items-center justify-between rounded-2xl border px-4 py-3 transition " +
+                    (filters.onlyVerified
+                      ? "border-teal-300 bg-teal-50/85 shadow-[0_18px_40px_-32px_rgba(13,148,136,0.45)]"
+                      : "border-white/75 bg-white/75")
+                  }
+                >
                   <div>
                     <div className="text-sm font-medium">Только проверенные</div>
                     <div className="text-xs text-slate-500">Демо-флаг: e-mail/телефон подтверждён</div>
                   </div>
                   <input
                     type="checkbox"
+                    className="h-4 w-4 rounded border-slate-300 accent-teal-700"
                     checked={filters.onlyVerified}
                     onChange={(e) => setFilters((f) => ({ ...f, onlyVerified: e.target.checked }))}
                   />
                 </div>
 
                 <div>
-                  <div className="mb-1 text-xs font-medium text-slate-600">Поиск по профилям</div>
+                  <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Поиск по профилям</div>
                   <Input value={filters.query} onChange={(e) => setFilters((f) => ({ ...f, query: e.target.value }))} placeholder="Например: профмат, сочинение, школа №12…" />
                 </div>
 
@@ -413,15 +473,17 @@ export function App() {
             </Card>
 
             <div className="grid gap-4">
-              <Card className="p-5">
+              <Card className="border-white/50 bg-white/72 p-5">
                 <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <div className="text-sm font-semibold">Результаты подбора</div>
+                    <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Результаты подбора</div>
                     <div className="text-sm text-slate-600">
                       Предмет: <span className="font-medium">{subjectName(filters.subjectId)}</span> · Формат: {filters.format} · {filters.durationMin} мин
                     </div>
                   </div>
-                  <Badge tone="slate">Найдено: {candidates.length}</Badge>
+                  <Badge tone="slate" className="border-white/70 bg-white/75 text-slate-700">
+                    Найдено: {candidates.length}
+                  </Badge>
                 </div>
               </Card>
 
@@ -430,11 +492,19 @@ export function App() {
                   const isSelected = p.id === selectedPersonId;
                   const overlap = p.available.filter((t) => filters.timeIds.includes(t));
                   return (
-                    <Card key={p.id} className={isSelected ? "ring-2 ring-indigo-400" : undefined}>
+                    <Card
+                      key={p.id}
+                      className={
+                        "border-white/55 bg-white/74 transition duration-200 hover:-translate-y-1 hover:bg-white " +
+                        (isSelected
+                          ? "border-teal-300 bg-[rgba(255,255,255,0.92)] shadow-[0_24px_60px_-34px_rgba(13,148,136,0.45)] ring-2 ring-teal-300/60"
+                          : "")
+                      }
+                    >
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <div className="flex items-center gap-2">
-                            <div className="text-sm font-semibold">{p.name}</div>
+                            <div className="display-font text-lg font-bold text-slate-950">{p.name}</div>
                             {p.verified ? <Badge tone="emerald">Проверен</Badge> : <Badge tone="amber">Без вериф.</Badge>}
                           </div>
                           <div className="mt-1 text-xs text-slate-500">
@@ -453,10 +523,10 @@ export function App() {
                         ))}
                       </div>
 
-                      <div className="mt-3 text-sm text-slate-700">{p.about}</div>
+                      <div className="mt-4 text-sm leading-7 text-slate-700">{p.about}</div>
 
                       {p.role === "mentor" && (
-                        <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-[22px] border border-white/70 bg-white/60 px-4 py-3">
                           <div className="text-xs text-slate-600">
                             <span className="font-medium text-slate-800">{p.rating.toFixed(1)}</span> · {stars(p.rating)} · {p.reviewsCount} отзывов
                           </div>
@@ -469,7 +539,7 @@ export function App() {
                       <Divider className="my-4" />
 
                       <div className="space-y-2">
-                        <div className="text-xs font-medium text-slate-600">Пересечение по времени</div>
+                        <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">Пересечение по времени</div>
                         <div className="flex flex-wrap gap-2">
                           {overlap.length ? (
                             overlap.map((t) => (
@@ -483,7 +553,7 @@ export function App() {
                         </div>
                       </div>
 
-                      <div className="mt-4 flex flex-wrap gap-2">
+                      <div className="mt-5 flex flex-wrap gap-2">
                         <Button variant={isSelected ? "secondary" : "primary"} onClick={() => setSelectedPersonId(isSelected ? null : p.id)}>
                           {isSelected ? "Выбрано" : "Выбрать"}
                         </Button>
@@ -516,10 +586,10 @@ export function App() {
               </div>
 
               {selectedPerson && (
-                <Card className="p-5">
+                <Card className="border-white/50 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(204,251,241,0.52))] p-5">
                   <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
                     <div>
-                      <div className="text-sm font-semibold">Выбранный профиль</div>
+                      <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Выбранный профиль</div>
                       <div className="text-sm text-slate-600">Можно использовать для ручного подтверждения заявки.</div>
                     </div>
                     <Badge tone="slate">ID: {selectedPerson.id}</Badge>
@@ -553,10 +623,10 @@ export function App() {
 
         {tab === "Заявки" && (
           <div className="grid gap-4">
-            <Card className="p-5">
+            <Card className="border-white/50 bg-white/72 p-5">
               <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <div className="text-sm font-semibold">Заявки на занятия</div>
+                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Заявки на занятия</div>
                   <div className="text-sm text-slate-600">
                     Здесь видно как работает “маркетплейс” коротких p2p-сессий: открытые → подтверждённые → завершённые.
                   </div>
@@ -572,7 +642,7 @@ export function App() {
                 const mentor = r.matchedMentorId ? people.find((p) => p.id === r.matchedMentorId) : null;
                 const tone = r.status === "Открыта" ? "amber" : r.status === "Подтверждена" ? "indigo" : "emerald";
                 return (
-                  <Card key={r.id}>
+                  <Card key={r.id} className="border-white/55 bg-white/74">
                     <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                       <div className="space-y-2">
                         <div className="flex flex-wrap items-center gap-2">
@@ -679,7 +749,9 @@ export function App() {
                 );
               })}
               {!persisted.requests.length && (
-                <Card className="p-6 text-center text-sm text-slate-600">Пока заявок нет. Создай первую через «Подобрать».</Card>
+                <Card className="border-white/50 bg-white/72 p-6 text-center text-sm text-slate-600">
+                  Пока заявок нет. Создай первую через «Подобрать».
+                </Card>
               )}
             </div>
           </div>
@@ -687,8 +759,8 @@ export function App() {
 
         {tab === "Портфолио" && (
           <div className="grid gap-4 md:grid-cols-2">
-            <Card className="p-5">
-              <div className="text-sm font-semibold">Портфолио наставника (демо)</div>
+            <Card className="border-white/50 bg-white/72 p-5">
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Портфолио наставника</div>
               <div className="mt-2 text-sm text-slate-600">
                 В SkillPort баллы фиксируют вклад: проведённые сессии, отзывы, активность. Это может стать частью
                 образовательного портфолио.
@@ -699,7 +771,7 @@ export function App() {
                   .filter((p) => p.role === "mentor")
                   .sort((a, b) => b.points - a.points)
                   .map((p, idx) => (
-                    <div key={p.id} className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-3">
+                    <div key={p.id} className="flex items-center justify-between rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                       <div>
                         <div className="flex items-center gap-2">
                           <div className="text-sm font-medium">#{idx + 1} {p.name}</div>
@@ -716,18 +788,18 @@ export function App() {
               </div>
             </Card>
 
-            <Card className="p-5">
-              <div className="text-sm font-semibold">Безопасность и правила</div>
+            <Card className="border-white/50 bg-white/72 p-5">
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Безопасность и правила</div>
               <div className="mt-2 grid gap-3 text-sm text-slate-700">
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="font-medium">Верификация</div>
                   <div className="mt-1 text-sm text-slate-600">Подтверждение e-mail/телефона и привязка к школе (для доверия).</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="font-medium">Модерация</div>
                   <div className="mt-1 text-sm text-slate-600">Отзывы, жалобы, правила общения и блокировки при нарушениях.</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="font-medium">Согласие родителей</div>
                   <div className="mt-1 text-sm text-slate-600">В пилотной версии - обязательное согласие для пользователей младше 18 лет.</div>
                 </div>
@@ -742,25 +814,25 @@ export function App() {
 
         {tab === "О проекте" && (
           <div className="grid gap-4">
-            <Card className="p-5">
-              <div className="text-sm font-semibold">SkillPort - суть проекта</div>
+            <Card className="border-white/50 bg-white/72 p-5">
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">SkillPort - суть проекта</div>
               <div className="mt-2 text-sm text-slate-700">
                 Платформа взаимного обучения для школьников 7-11 классов: короткие занятия 20-30 минут, p2p-модель,
                 рейтинги/отзывы, баллы и портфолио наставника. Модель монетизации — подписка школам (B2B) + freemium.
               </div>
               <Divider className="my-4" />
               <div className="grid gap-3 md:grid-cols-3">
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="text-xs text-slate-500">Целевая аудитория</div>
                   <div className="mt-1 text-sm font-medium">Ученики 7–9</div>
                   <div className="mt-1 text-sm text-slate-600">Нужна доступная помощь по предметам.</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="text-xs text-slate-500">Наставники</div>
                   <div className="mt-1 text-sm font-medium">9–11 классы</div>
                   <div className="mt-1 text-sm text-slate-600">Закрепляют знания и собирают портфолио.</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="text-xs text-slate-500">Формат</div>
                   <div className="mt-1 text-sm font-medium">20–30 минут</div>
                   <div className="mt-1 text-sm text-slate-600">Видео/чат, быстро и по делу.</div>
@@ -775,23 +847,23 @@ export function App() {
               </div>
             </Card>
 
-            <Card className="p-5">
-              <div className="text-sm font-semibold">Что включено в MVP</div>
+            <Card className="border-white/50 bg-white/72 p-5">
+              <div className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">Что включено в MVP</div>
               <Divider className="my-4" />
               <div className="grid gap-3 md:grid-cols-2">
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="font-medium">Подбор “наставник ↔ ученик”</div>
                   <div className="mt-1 text-sm text-slate-600">Фильтры: класс, предмет, формат, время, верификация, поиск.</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="font-medium">Заявки и статусы</div>
                   <div className="mt-1 text-sm text-slate-600">Открыта → Подтверждена → Завершена, автоподбор, ручной мэтч.</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="font-medium">Портфолио (демо)</div>
                   <div className="mt-1 text-sm text-slate-600">Таблица наставников по баллам, имитация начислений.</div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 bg-white p-4">
+                <div className="rounded-[24px] border border-white/75 bg-white/75 p-4 shadow-[0_16px_40px_-32px_rgba(15,23,42,0.35)]">
                   <div className="font-medium">LocalStorage</div>
                   <div className="mt-1 text-sm text-slate-600">Заявки сохраняются в браузере (демо-данные).</div>
                 </div>
@@ -801,8 +873,8 @@ export function App() {
         )}
       </main>
 
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="flex w-full flex-col gap-2 px-4 py-6 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
+      <footer className="border-t border-white/45 bg-[rgba(252,250,245,0.7)] backdrop-blur-xl">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 px-4 py-6 text-xs text-slate-500 md:flex-row md:items-center md:justify-between md:px-6">
           <div>SkillPort MVP · прототип интерфейса для проекта взаимного обучения</div>
         </div>
       </footer>

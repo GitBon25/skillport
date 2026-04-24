@@ -6,7 +6,7 @@ export function Card(props: React.HTMLAttributes<HTMLDivElement>) {
     <div
       {...props}
       className={cn(
-        "rounded-2xl border border-slate-200 bg-white/80 p-4 shadow-sm backdrop-blur",
+        "rounded-[28px] border border-white/65 bg-[rgba(255,252,247,0.82)] p-4 shadow-[0_24px_80px_-36px_rgba(15,23,42,0.35)] backdrop-blur-xl",
         props.className
       )}
     />
@@ -22,16 +22,20 @@ export function Button({
   size?: "sm" | "md";
 }) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition focus:outline-none focus:ring-2 focus:ring-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed";
+    "inline-flex items-center justify-center gap-2 rounded-2xl border text-sm font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-300/70 focus:ring-offset-2 focus:ring-offset-transparent disabled:cursor-not-allowed disabled:opacity-50";
   const variants: Record<string, string> = {
-    primary: "bg-indigo-600 text-white hover:bg-indigo-700",
-    secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
-    ghost: "bg-transparent text-slate-900 hover:bg-slate-100",
-    danger: "bg-rose-600 text-white hover:bg-rose-700",
+    primary:
+      "border-transparent bg-gradient-to-r from-teal-700 via-teal-600 to-cyan-500 text-white shadow-[0_18px_40px_-20px_rgba(13,148,136,0.75)] hover:-translate-y-0.5 hover:brightness-105",
+    secondary:
+      "border-white/70 bg-white/80 text-slate-800 shadow-[0_16px_35px_-24px_rgba(15,23,42,0.35)] hover:-translate-y-0.5 hover:bg-white",
+    ghost:
+      "border-transparent bg-transparent text-slate-700 hover:border-white/50 hover:bg-white/55 hover:text-slate-950",
+    danger:
+      "border-transparent bg-gradient-to-r from-rose-600 to-orange-500 text-white shadow-[0_18px_40px_-24px_rgba(244,63,94,0.65)] hover:-translate-y-0.5 hover:brightness-105",
   };
   const sizes: Record<string, string> = {
-    sm: "h-9 px-3 text-sm",
-    md: "h-10 px-4 text-sm",
+    sm: "h-10 px-4",
+    md: "h-11 px-5",
   };
   return <button {...props} className={cn(base, variants[variant], sizes[size], props.className)} />;
 }
@@ -43,17 +47,17 @@ export function Badge({
   tone?: "slate" | "indigo" | "emerald" | "amber" | "rose";
 }) {
   const tones: Record<string, string> = {
-    slate: "bg-slate-100 text-slate-700",
-    indigo: "bg-indigo-50 text-indigo-700",
-    emerald: "bg-emerald-50 text-emerald-700",
-    amber: "bg-amber-50 text-amber-800",
-    rose: "bg-rose-50 text-rose-700",
+    slate: "border border-slate-200/80 bg-white/70 text-slate-700",
+    indigo: "border border-cyan-200/70 bg-cyan-50/80 text-cyan-800",
+    emerald: "border border-emerald-200/70 bg-emerald-50/85 text-emerald-800",
+    amber: "border border-amber-200/80 bg-amber-50/90 text-amber-900",
+    rose: "border border-rose-200/80 bg-rose-50/85 text-rose-700",
   };
   return (
     <span
       {...props}
       className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium",
+        "inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em]",
         tones[tone],
         props.className
       )}
@@ -66,7 +70,7 @@ export function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
     <input
       {...props}
       className={cn(
-        "h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100",
+        "h-12 w-full rounded-2xl border border-white/75 bg-white/80 px-4 text-sm text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] outline-none transition focus:border-teal-300 focus:bg-white focus:ring-4 focus:ring-teal-100/80",
         props.className
       )}
     />
@@ -78,7 +82,7 @@ export function Select(props: React.SelectHTMLAttributes<HTMLSelectElement>) {
     <select
       {...props}
       className={cn(
-        "h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100",
+        "h-12 w-full rounded-2xl border border-white/75 bg-white/80 px-4 text-sm text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] outline-none transition focus:border-teal-300 focus:bg-white focus:ring-4 focus:ring-teal-100/80",
         props.className
       )}
     />
@@ -90,7 +94,7 @@ export function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement
     <textarea
       {...props}
       className={cn(
-        "w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100",
+        "w-full rounded-2xl border border-white/75 bg-white/80 px-4 py-3 text-sm text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] outline-none transition focus:border-teal-300 focus:bg-white focus:ring-4 focus:ring-teal-100/80",
         props.className
       )}
     />
@@ -98,5 +102,5 @@ export function Textarea(props: React.TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 export function Divider({ className }: { className?: string }) {
-  return <div className={cn("h-px w-full bg-slate-200", className)} />;
+  return <div className={cn("h-px w-full bg-gradient-to-r from-transparent via-slate-300/80 to-transparent", className)} />;
 }
